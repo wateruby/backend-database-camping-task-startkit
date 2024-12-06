@@ -173,8 +173,20 @@ SET join_at='2024-11-25 14:01:59',status='上課中'
 WHERE user_id=(SELECT id FROM "USER" WHERE name='王小明') AND status='即將授課';
 
 -- 5-6. 查詢：計算用戶王小明的購買堂數，顯示須包含以下欄位： user_id , total。 (需使用到 SUM 函式與 Group By)
+SELECT 
+	user_id,
+	SUM(purchased_credits) as total
+FROM "CREDIT_PURCHASE"
+WHERE user_id=(SELECT id FROM "USER" WHERE name='王小明')
+GROUP BY user_id;
 
 -- 5-7. 查詢：計算用戶王小明的已使用堂數，顯示須包含以下欄位： user_id , total。 (需使用到 Count 函式與 Group By)
+SELECT 
+	user_id,
+	COUNT(id) as total
+FROM "COURSE_BOOKING"
+WHERE user_id=(SELECT id FROM "USER" WHERE name='王小明') AND status='上課中'
+GROUP BY user_id;
 
 -- 5-8. [挑戰題] 查詢：請在一次查詢中，計算用戶王小明的剩餘可用堂數，顯示須包含以下欄位： user_id , remaining_credit
     -- 提示：
@@ -193,6 +205,16 @@ WHERE user_id=(SELECT id FROM "USER" WHERE name='王小明') AND status='即將�
 -- 6. 後台報表
 -- 6-1 查詢：查詢專長為重訓的教練，並按經驗年數排序，由資深到資淺（需使用 inner join 與 order by 語法)
 -- 顯示須包含以下欄位： 教練名稱 , 經驗年數, 專長名稱
+SELECT
+  "USER".name AS 教練名稱,
+  "COACH".experience_years AS 經驗年數,
+  "SKILL".name AS 專長名稱
+FROM "COACH_LINK_SKILL"
+JOIN "SKILL" ON "COACH_LINK_SKILL".skill_id = "SKILL".id
+JOIN "COACH" ON "COACH".id="COACH_LINK_SKILL".coach_id
+JOIN "USER" ON "USER".id="COACH".user_id
+WHERE "COACH_LINK_SKILL".skill_id=(SELECT "SKILL".id FROM "SKILL" WHERE "SKILL".name='重訓')
+ORDER BY "COACH".experience_years DESC;
 
 -- 6-2 查詢：查詢每種專長的教練數量，並只列出教練數量最多的專長（需使用 group by, inner join 與 order by 與 limit 語法）
 -- 顯示須包含以下欄位： 專長名稱, coach_total
