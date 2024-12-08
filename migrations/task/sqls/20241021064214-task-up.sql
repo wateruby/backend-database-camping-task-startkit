@@ -229,24 +229,39 @@ LIMIT 1;
 
 -- 6-3. 查詢：計算 11 月份組合包方案的銷售數量
 -- 顯示須包含以下欄位： 組合包方案名稱, 銷售數量
+-- SELECT
+-- 	"CREDIT_PACKAGE".name AS 組合包方案名稱, 
+--   count(*) AS 銷售數量
+-- FROM "CREDIT_PACKAGE"
+-- JOIN "CREDIT_PURCHASE" ON "CREDIT_PURCHASE".credit_package_id="CREDIT_PACKAGE".id
+-- WHERE "CREDIT_PURCHASE".created_at >= '2024-11-01 00:00:00' AND "CREDIT_PURCHASE".created_at < '2024-12-01 00:00:00'
+-- GROUP BY "CREDIT_PACKAGE".name
 SELECT
 	"CREDIT_PACKAGE".name AS 組合包方案名稱, 
   count(*) AS 銷售數量
 FROM "CREDIT_PACKAGE"
 JOIN "CREDIT_PURCHASE" ON "CREDIT_PURCHASE".credit_package_id="CREDIT_PACKAGE".id
-WHERE "CREDIT_PURCHASE".created_at >= '2024-11-01 00:00:00' AND "CREDIT_PURCHASE".created_at < '2024-12-01 00:00:00'
+WHERE "CREDIT_PURCHASE".created_at >= '2024-12-01 00:00:00' AND "CREDIT_PURCHASE".created_at < '2025-01-01 00:00:00'
 GROUP BY "CREDIT_PACKAGE".name
 
 -- 6-4. 查詢：計算 11 月份總營收（使用 purchase_at 欄位統計）
 -- 顯示須包含以下欄位： 總營收
+-- SELECT
+-- 	SUM(price_paid) AS 總營收
+-- FROM "CREDIT_PURCHASE"
+-- WHERE "CREDIT_PURCHASE".purchase_at >= '2024-11-01 00:00:00' AND "CREDIT_PURCHASE".purchase_at < '2024-12-01 00:00:00';
 SELECT
 	SUM(price_paid) AS 總營收
 FROM "CREDIT_PURCHASE"
-WHERE "CREDIT_PURCHASE".purchase_at >= '2024-11-01 00:00:00' AND "CREDIT_PURCHASE".purchase_at < '2024-12-01 00:00:00';
+WHERE "CREDIT_PURCHASE".purchase_at >= '2024-12-01 00:00:00' AND "CREDIT_PURCHASE".purchase_at < '2025-01-01 00:00:00';
 
 -- 6-5. 查詢：計算 11 月份有預約課程的會員人數（需使用 Distinct，並用 created_at 和 status 欄位統計）
 -- 顯示須包含以下欄位： 預約會員人數
+-- SELECT
+-- 	 COUNT(Distinct(user_id)) AS 預約會員人數
+-- FROM "COURSE_BOOKING"
+-- WHERE "COURSE_BOOKING".created_at >= '2024-11-01 00:00:00' AND "COURSE_BOOKING".created_at < '2024-12-01 00:00:00' AND (status IN ('即將授課','上課中'));
 SELECT
 	 COUNT(Distinct(user_id)) AS 預約會員人數
 FROM "COURSE_BOOKING"
-WHERE "COURSE_BOOKING".created_at >= '2024-11-01 00:00:00' AND "COURSE_BOOKING".created_at < '2024-12-01 00:00:00' AND (status IN ('即將授課','上課中'));
+WHERE "COURSE_BOOKING".created_at >= '2024-12-01 00:00:00' AND "COURSE_BOOKING".created_at < '2025-01-01 00:00:00' AND status IN ('即將授課','上課中');
