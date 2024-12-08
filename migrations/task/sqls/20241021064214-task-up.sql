@@ -195,6 +195,8 @@ GROUP BY user_id;
     -- inner join ( 用戶王小明的已使用堂數) as "COURSE_BOOKING"
     -- on "COURSE_BOOKING".user_id = "CREDIT_PURCHASE".user_id;
 
+    
+
 
 -- ████████  █████   █     ███  
 --   █ █   ██    █  █     █     
@@ -250,10 +252,10 @@ GROUP BY "CREDIT_PACKAGE".name;
 -- 	SUM(price_paid) AS 總營收
 -- FROM "CREDIT_PURCHASE"
 -- WHERE "CREDIT_PURCHASE".purchase_at >= '2024-11-01 00:00:00' AND "CREDIT_PURCHASE".purchase_at < '2024-12-01 00:00:00';
--- SELECT
--- 	SUM(price_paid) AS 總營收
--- FROM "CREDIT_PURCHASE"
--- WHERE "CREDIT_PURCHASE".purchase_at >= '2024-12-01 00:00:00' AND "CREDIT_PURCHASE".purchase_at < '2025-01-01 00:00:00';
+SELECT
+	SUM(price_paid) AS 總營收
+FROM "CREDIT_PURCHASE"
+WHERE "CREDIT_PURCHASE".purchase_at >= '2024-12-01 00:00:00' AND "CREDIT_PURCHASE".purchase_at < '2025-01-01 00:00:00';
 
 -- 6-5. 查詢：計算 11 月份有預約課程的會員人數（需使用 Distinct，並用 created_at 和 status 欄位統計）
 -- 顯示須包含以下欄位： 預約會員人數
