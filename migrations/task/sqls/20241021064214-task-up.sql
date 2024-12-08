@@ -249,4 +249,4 @@ WHERE "CREDIT_PURCHASE".purchase_at >= '2024-11-01 00:00:00' AND "CREDIT_PURCHAS
 SELECT
 	 COUNT(Distinct(user_id)) AS 預約會員人數
 FROM "COURSE_BOOKING"
-WHERE "COURSE_BOOKING".created_at >= '2024-11-01 00:00:00' AND "COURSE_BOOKING".created_at < '2024-12-01 00:00:00' AND status IN ('即將授課','上課中');
+WHERE "COURSE_BOOKING".created_at >= '2024-11-01 00:00:00' AND "COURSE_BOOKING".created_at < '2024-12-01 00:00:00' AND (status IN ('即將授課','上課中'));
