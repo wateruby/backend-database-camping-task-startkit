@@ -196,12 +196,12 @@ GROUP BY user_id;
     -- on "COURSE_BOOKING".user_id = "CREDIT_PURCHASE".user_id;
 SELECT 
  "CREDIT_PURCHASE".user_id AS user_id, 
- (SUM("CREDIT_PURCHASE".purchased_credits) - (SELECT count(*) FROM "COURSE_BOOKING"
-WHERE status='上課中')) as remaining_credit
+ (SUM("CREDIT_PURCHASE".purchased_credits) - (SELECT count(*) FROM "COURSE_BOOKING" WHERE status='上課中')) as remaining_credit
 FROM "CREDIT_PURCHASE"
+JOIN "COURSE_BOOKING" ON "COURSE_BOOKING".user_id = "CREDIT_PURCHASE".user_id
+JOIN "USER" ON "USER".id="CREDIT_PURCHASE".user_id
 WHERE "CREDIT_PURCHASE".user_id=(SELECT "USER".id FROM "USER" WHERE "USER".name='王小明')
 GROUP BY "CREDIT_PURCHASE".user_id;
-
 
 
 -- ████████  █████   █     ███  
